@@ -1,10 +1,17 @@
 feature 'Testing infrastructure' do
   scenario 'Can run app and check page content' do
-    visit('/')
-    fill_in :player, with: 'Charlotte'
-    fill_in :player2, with: 'Mittens'
-    click_button 'Submit'
+    sign_in_and_play
     expect(page).to have_content 'Charlotte vs. Mittens'
   end
   
+  scenario 'see Player 2 hit points' do
+    sign_in_and_play
+    expect(page).to have_content 'Mittens: 60HP'
+  end
+
+  scenario 'attack Player 2' do
+    sign_in_and_play
+    click_button 'Attack'
+    expect(page).to have_content 'Charlotte attacked Mittens'
+  end
 end
