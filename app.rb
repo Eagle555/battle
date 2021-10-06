@@ -19,16 +19,21 @@ class Battle < Sinatra::Base
   end
   
   get '/play' do
-    @player = $player.name
+    @player = $player
     p @player
-    @player2 = $player2.name
+    @player2 = $player2
     p @player2
     erb :play
   end
 
+  get '/confirmation' do
+    redirect '/play'
+  end
+
   get '/attack' do
-    @player = $player.name
-    @player2 = $player2.name
+    @player = $player
+    @player2 = $player2
+    Game.new.attack(@player2)
     erb :attack
   end
   
