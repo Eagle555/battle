@@ -9,6 +9,10 @@ class Battle < Sinatra::Base
     register Sinatra::Reloader
   end
 
+  before do
+    @game = Game.instance
+  end
+
   get '/' do
     erb(:index)
   end
@@ -17,13 +21,13 @@ class Battle < Sinatra::Base
     
     player = Player.new(params[:player])
     player2 = Player.new(params[:player2])
-    $game = Game.new(player, player2)
+    @game = Game.create(player, player2)
     redirect '/play'
   end
   
   get '/play' do
-    @player = $game.player1
-    @player2 = $game.player2
+    @player = @game.player1
+    @player2 = @game.player2
     erb :play
   end
 
@@ -32,9 +36,9 @@ class Battle < Sinatra::Base
   end
 
   get '/attack' do
-    @player = $game.player1
-    @player2 = $game.player2
-    $game.attack(@player2)
+    @player = @game.player1
+    @player2 = @game.player2
+    @game.attack
     erb :attack
   end
   

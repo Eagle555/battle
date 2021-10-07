@@ -1,4 +1,8 @@
+<% unless @game.player_turn == @player %>
 <%= @player.name%> attacked <%= @player2.name %>
+<% else %>
+<%= @player2.name%> attacked <%= @player.name %>
+<% end %>
 <form action="/confirmation">
   <input type="submit" value="OK">
 </form>
